@@ -1,6 +1,6 @@
 version: "3"
 volumes:
-    db-data:
+  db-data:
 
 services:
   db:
@@ -11,22 +11,51 @@ services:
       - POSTGRES_DB=$DB_NAME
       - POSTGRES_PASSWORD=$DB_PASSWORD
   web:
-    build:
-        context: ..
-        dockerfile: docker/Dockerfile
-    # To use a pre-built image, remove the above "build" section
-    # and uncomment the following line:
-    # image: healthchecks/healthchecks:latest
-    env_file:
-        - .env
+    image: healthchecks/healthchecks:latest
+    environment:
+      - DB_NAME=$DB_NAME
+      - DB_PASSWORD=$DB_PASSWORD
+      - ALLOWED_HOSTS=$ALLOWED_HOSTS
+      - SITE_ROOT=$SITE_ROOT
+      - SECRET_KEY=$SECRET_KEY
+      - DB=postgres
+      - DB_CONN_MAX_AGE=0
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_SSLMODE=prefer
+      - DB_TARGET_SESSION_ATTRS=read-write
+      - DB_USER=postgres
+      - DEBUG=False
+      - DEFAULT_FROM_EMAIL=healthchecks@example.org
+      - DISCORD_CLIENT_ID=
+      - EMAIL_PORT=587
+      - EMAIL_USE_TLS=True
+      - EMAIL_USE_VERIFICATION=True
+      - INTEGRATIONS_ALLOW_PRIVATE_IPS=False
+      - MASTER_BADGE_LABEL=Mychecks
+      - MATTERMOST_ENABLED=True
+      - MSTEAMS_ENABLED=True
+      - OPSGENIE_ENABLED=True
+      - PAGERTREE_ENABLED=True
+      - PD_ENABLED=True
+      - PING_BODY_LIMIT=10000
+      - PING_ENDPOINT=http://localhost:8000/ping/
+      - PROMETHEUS_ENABLED=True
+      - PUSHOVER_EMERGENCY_EXPIRATION=86400
+      - PUSHOVER_EMERGENCY_RETRY_DELAY=300
+      - REGISTRATION_OPEN=True
+      - ROCKETCHAT_ENABLED=True
+      - S3_TIMEOUT=60
+      - S3_SECURE=True
+      - SHELL_ENABLED=False
+      - SITE_NAME='Bossa Nova HealthChecks'
+      - SPIKE_ENABLED=True
+      - USE_PAYMENTS=False
+      - VICTOROPS_ENABLED=True
+      - WEBHOOKS_ENABLED=True
+      - ZULIP_ENABLED=True
     expose:
-        - 8000
-    # ports:
-        # - "8000:8000"
-        # To enable SMTP on port 2525, set SMTPD_PORT=2525 in .env
-        # and uncomment the following line:
-        # - "2525:2525"
+      - 8000
     depends_on:
-        - db
+      - db
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uwsgi /opt/healthchecks/docker/uwsgi.ini'
-
