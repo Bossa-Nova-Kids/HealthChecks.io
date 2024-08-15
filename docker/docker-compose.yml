@@ -18,7 +18,7 @@ services:
       - ALLOWED_HOSTS=$ALLOWED_HOSTS
       - SITE_ROOT=$SITE_ROOT
       - SECRET_KEY=$SECRET_KEY
-      - PING_ENDPOINT=${SITE_ROOT}/ping/
+      - PING_ENDPOINT=$PING_ENDPOINT
       - DB=postgres
       - DB_CONN_MAX_AGE=0
       - DB_HOST=db
