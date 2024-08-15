@@ -18,6 +18,7 @@ services:
       - ALLOWED_HOSTS=$ALLOWED_HOSTS
       - SITE_ROOT=$SITE_ROOT
       - SECRET_KEY=$SECRET_KEY
+      - PING_ENDPOINT=$SITE_ROOT/ping/
       - DB=postgres
       - DB_CONN_MAX_AGE=0
       - DB_HOST=db
@@ -39,7 +40,6 @@ services:
       - PAGERTREE_ENABLED=True
       - PD_ENABLED=True
       - PING_BODY_LIMIT=10000
-      - PING_ENDPOINT=http://localhost:8000/ping/
       - PROMETHEUS_ENABLED=True
       - PUSHOVER_EMERGENCY_EXPIRATION=86400
       - PUSHOVER_EMERGENCY_RETRY_DELAY=300
